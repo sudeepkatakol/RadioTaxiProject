@@ -1,6 +1,5 @@
 package in.ac.bits_pilani.radiotaxi.roles.rider;
 
-import in.ac.bits_pilani.radiotaxi.CabType;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,35 +32,6 @@ public class BookingServlet extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession(false);
-		if(session != null) {
-			PrintWriter out = response.getWriter();
-
-			Rider rider = (Rider) session.getAttribute("user");
-			String origin = request.getParameter("origin");
-			String dest = request.getParameter("dest");
-			String distance = request.getParameter("distance");
-			String duration = request.getParameter("time");
-
-			float[] originCoord = {Float.parseFloat(request.getParameter("orig_lat")),
-					Float.parseFloat(request.getParameter("orig_lng"))};
-			float[] destCoord = {Float.parseFloat(request.getParameter("dest_lat")),
-					Float.parseFloat(request.getParameter("dest_lng"))};
-
-			Booking b = new Booking();
-			request.getRequestDispatcher("html/html-top-common.html").include(request, response);
-			request.getRequestDispatcher("html/riderbookings-layout-1.html").include(request, response);
-			try {
-				b.bookTrip(rider.getUsername(), origin, dest, CabType.Regular, distance, duration, originCoord, destCoord); // add driver later when confirmed
-			} catch(Exception e) {
-				request.getRequestDispatcher("html/error.html").include(request, response);
-				out.println("Database error");
-			}
-			request.getRequestDispatcher("html/html-bottom-common.html").include(request, response);
-		}
-		else {
-			response.sendRedirect("index.html");
-		}
+		request.getRequestDispatcher("/confirm").include(request, response);
 	}
 }

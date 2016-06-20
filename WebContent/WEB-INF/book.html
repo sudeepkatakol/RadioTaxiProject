@@ -52,7 +52,22 @@
 		<input id="dest-auto" class="controls" type="text" placeholder="Enter destination">
 		
 		<div class="row">
-		<div class="input-field col s4">
+			<div style="margin-bottom:10px;">
+			<p style="font-size:18px; margin-bottom:10px;">Choose your ride!</p>
+			<p>
+			<input class="with-gap" id="opt1" type="radio" name="cabtype" value="regular" checked>
+			<label for="opt1">Regular</label>
+			</p>
+			<p>
+			<input class="with-gap" id="opt2" type="radio" name="cabtype" value="extended">
+			<label for="opt2">Extended</label>
+			</p>
+			<p>
+			<input class="with-gap" id="opt3" type="radio" name="cabtype" value="double">
+			<label for="opt3">Double</label>
+			</p>
+			</div>
+		<div class="row">
 			<button class="btn waves-effect waves-light" id="book_button" type="submit" value="Book"  >Book</button>
 		</div>
 		<input type="hidden" name="origin" id="origin">
@@ -64,6 +79,7 @@
 		<input type="hidden" name="dest_lat" id="dest_lat">
 		<input type="hidden" name="dest_lng" id="dest_lng">
 		<input type="hidden" name="place_id" id="place_id">
+		</div>
 	</form>
 	<script src="js/gmaps.js"></script>
 	<!-- Google Maps API load configuration
