@@ -18,8 +18,9 @@ import in.ac.bits_pilani.radiotaxi.CabType;
 @WebServlet("/confirm")
 public class ConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static String rider,origin,dest,distance, duration; float[] originCoord, destCoord; 
+    private static String origin,dest,distance, duration; float[] originCoord, destCoord; 
     private static CabType cab;
+    private static Rider rider;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,7 +38,7 @@ public class ConfirmServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			Booking b = new Booking();
 			try {
-				b.bookTrip(rider, origin, dest, cab, distance, duration, originCoord, destCoord); // add driver later when confirmed
+				b.bookTrip(rider.getUsername(), origin, dest, cab, distance, duration, originCoord, destCoord); // add driver later when confirmed
 			} catch(Exception e) {
 				request.getRequestDispatcher("html/error.html").include(request, response);
 				out.println("Database error");
@@ -58,7 +59,7 @@ public class ConfirmServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			PrintWriter out = response.getWriter();
-			rider = (String) session.getAttribute("user");
+			rider = (Rider) session.getAttribute("user");
 			origin = request.getParameter("origin");
 			dest = request.getParameter("dest");
 			distance = request.getParameter("distance");
@@ -73,6 +74,7 @@ public class ConfirmServlet extends HttpServlet {
 						out.println("<p><center><font color=red>Origin and Destination couldn't be gathered. Please try again<center></font></p>");
 						request.getRequestDispatcher("/book").forward(request,response);
 					}
+						
 			String cabtype=request.getParameter("cabtype");
 			switch(cabtype){
 			case "regular": cab=CabType.Regular; break;
